@@ -6,17 +6,17 @@ class CookieGame {
             'gimmecookies': 1000,
             'resetgame': 0
         };
+        console.log('CookieGame initialized');
     }
 
     init() {
-        // Get DOM elements
+        // Get DOM elements with error checking
         this.cookieBtn = document.getElementById('cookie-btn');
         this.cookieCount = document.getElementById('cookie-count');
         this.codeInput = document.getElementById('code-input');
         this.redeemBtn = document.getElementById('redeem-btn');
         this.resetBtn = document.getElementById('reset-btn');
 
-        // Check for missing elements
         if (!this.cookieBtn || !this.cookieCount || !this.codeInput || !this.redeemBtn || !this.resetBtn) {
             console.error('Missing DOM elements:', {
                 cookieBtn: this.cookieBtn,
@@ -29,12 +29,16 @@ class CookieGame {
         }
 
         // Add event listeners
-        this.cookieBtn.addEventListener('click', () => this.addCookies(1));
+        this.cookieBtn.addEventListener('click', () => {
+            this.addCookies(1);
+            console.log('Cookie clicked, cookies:', this.cookies);
+        });
         this.redeemBtn.addEventListener('click', () => this.redeemCode());
         this.resetBtn.addEventListener('click', () => this.resetGame());
 
         // Load saved state
         this.loadGame();
+        console.log('Game initialized, starting cookies:', this.cookies);
     }
 
     addCookies(amount) {
@@ -47,12 +51,12 @@ class CookieGame {
         const code = this.codeInput.value.toLowerCase().trim();
         if (this.validCodes[code] !== undefined) {
             this.addCookies(this.validCodes[code]);
-            if (code === 'resetgame') {
-                this.cookies = 0; // Ensure reset
-            }
+            if (code === 'resetgame') this.cookies = 0; // Ensure reset
             this.codeInput.value = '';
+            console.log('Code redeemed:', code, 'cookies:', this.cookies);
         } else {
             alert('Invalid code!');
+            console.log('Invalid code attempted:', code);
         }
     }
 
@@ -60,6 +64,7 @@ class CookieGame {
         this.cookies = 0;
         this.updateDisplay();
         this.saveGame();
+        console.log('Game reset, cookies:', this.cookies);
     }
 
     updateDisplay() {
@@ -67,22 +72,31 @@ class CookieGame {
     }
 
     saveGame() {
-        localStorage.setItem('cookieGameState', JSON.stringify({ cookies: this.cookies }));
+        try {
+            localStorage.setItem('cookieGameState', JSON.stringify({ cookies: this.cookies }));
+            console.log('Game saved, cookies:', this.cookies);
+        } catch (e) {
+            console.error('Save failed:', e);
+        }
     }
 
     loadGame() {
-        const saved = localStorage.getItem('cookieGameState');
-        if (saved) {
-            const data = JSON.parse(saved);
-            this.cookies = data.cookies || 0;
-            this.updateDisplay();
+        try {
+            const saved = localStorage.getItem('cookieGameState');
+            if (saved) {
+                const data = JSON.parse(saved);
+                this.cookies = data.cookies || 0;
+                console.log('Game loaded, cookies:', this.cookies);
+            }
+        } catch (e) {
+            console.error('Load failed:', e);
         }
     }
 }
 
 // Initialize the game
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Game initialized');
+    console.log('DOM loaded, initializing game');
     const game = new CookieGame();
     game.init();
 });
