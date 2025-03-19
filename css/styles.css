@@ -1,0 +1,35 @@
+/* css/styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.cookie-img {
+    width: 200px;
+    height: 200px;
+    transition: transform 0.1s ease;
+}
+
+.cookie-img:hover {
+    transform: scale(1.1);
+}
+
+.cookie-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.cookie-count {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.code-section {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+}
