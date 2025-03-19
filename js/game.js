@@ -10,7 +10,6 @@ class CookieGame {
     }
 
     init() {
-        // Get DOM elements with error checking
         this.cookieBtn = document.getElementById('cookie-btn');
         this.cookieCount = document.getElementById('cookie-count');
         this.codeInput = document.getElementById('code-input');
@@ -28,7 +27,6 @@ class CookieGame {
             return;
         }
 
-        // Add event listeners
         this.cookieBtn.addEventListener('click', () => {
             this.addCookies(1);
             console.log('Cookie clicked, cookies:', this.cookies);
@@ -36,7 +34,6 @@ class CookieGame {
         this.redeemBtn.addEventListener('click', () => this.redeemCode());
         this.resetBtn.addEventListener('click', () => this.resetGame());
 
-        // Load saved state
         this.loadGame();
         console.log('Game initialized, starting cookies:', this.cookies);
     }
@@ -51,7 +48,7 @@ class CookieGame {
         const code = this.codeInput.value.toLowerCase().trim();
         if (this.validCodes[code] !== undefined) {
             this.addCookies(this.validCodes[code]);
-            if (code === 'resetgame') this.cookies = 0; // Ensure reset
+            if (code === 'resetgame') this.cookies = 0;
             this.codeInput.value = '';
             console.log('Code redeemed:', code, 'cookies:', this.cookies);
         } else {
@@ -94,7 +91,6 @@ class CookieGame {
     }
 }
 
-// Initialize the game
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing game');
     const game = new CookieGame();
