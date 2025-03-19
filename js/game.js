@@ -35,6 +35,7 @@ class CookieGame {
         this.resetBtn.addEventListener('click', () => this.resetGame());
 
         this.loadGame();
+        this.updateDisplay(); // Ensure initial display update
         console.log('Game initialized, starting cookies:', this.cookies);
     }
 
